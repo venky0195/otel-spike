@@ -1,0 +1,51 @@
+extensions:
+  # memory_ballast:
+  #   size_mib: 512
+  # zpages:
+    # endpoint: 0.0.0.0:55679
+
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+        # tls:
+        #   insecure: true
+        # insecure: true
+      http:
+        endpoint: 0.0.0.0:4318
+
+processors:
+  # filter/ottl:
+  #   error_mode: ignore
+  #   logs:
+  #     log_record:
+  #       - 'IsMatch(body, ".*password.*")'
+  # processor:
+
+exporters:
+  # debug:
+  #   verbosity: detailed
+  exporter:
+  # otlp:
+  #   endpoint: http:0.0.0.0:4317
+  #   tls:
+  #     insecure: true
+    
+service:
+  pipelines:
+    # traces:
+    #   receivers: [otlp]
+    #   processors: []
+    #   exporters: [sample]
+    # metrics:
+    #   receivers: [otlp]
+    #   # processors: [memory_limiter, batch]
+    #   exporters: [sample]
+    logs:
+      # level: detailed
+      receivers: [otlp]
+      processors: []
+      exporters: [exporter]
+
+  # extensions: [memory_ballast, zpages]
